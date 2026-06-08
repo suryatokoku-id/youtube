@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TV Promosi</title>
+</head>
+<body>
+
+<div id="player"></div>
+
+<audio id="promoPlayer"></audio>
+
+<script src="https://www.youtube.com/iframe_api"></script>
+
+<script>
+let player;
+let lastPlayed = "";
+
+const jadwalPromo = [
+    {
+        waktu: "07:45",
+        audio: "audio/CBSS-01.mp3"
+    },
+    {
+        waktu: "12:00",
+        audio: "audio/promo-minyak.mp3"
+    },
+    {
+        waktu: "15:00",
+        audio: "audio/promo-member.mp3"
+    },
+    {
+        waktu: "17:00",
+        audio: "audio/promo-cbs.mp3"
+    }
+];
+
+function onYouTubeIframeAPIReady() {
+    player = new YT.Player('player', {
+        width: '100%',
+        height: '720',
+        videoId: 'VIDEO_ID_YOUTUBE',
+        playerVars: {
+            autoplay: 1,
+            controls: 0,
+            rel: 0
+        }
+    });
+}
+
+const promoPlayer = document.getElementById("promoPlayer");
+
+setInterval(() => {
+
+    const now = new Date();
+
+    const jam =
+        String(now.getHours()).padStart(2, '0') +
+        ":" +
+        String(now.getMinutes()).padStart(2, '0');
+
+    jadwalPromo.forEach(promo => {
+
+        const key = jam + promo.audio;
+
+        if (promo.waktu === jam && lastPlayed !== key) {
+
+            lastPlayed = key;
+
+            player.pauseVideo();
+
+            promoPlayer.src = promo.audio;
+
+            promoPlayer.play();
+
+            promoPlayer.onended = () => {
+                player.playVideo();
+            };
+        }
+    });
+
+}, 1000);
+
+</script>
+
+</body>
+</html>
