@@ -247,6 +247,9 @@ let player;
 let currentVideoId = "";
 let lastPlayed = "";
 
+let daftarVideo = [];
+let currentIndex = 0;
+
 const statusBox =
     document.getElementById("status");
 
@@ -294,6 +297,12 @@ function onPlayerStateChange(event){
     if(event.data === YT.PlayerState.PLAYING){
 
         statusBox.innerHTML = "Video Aktif";
+
+    }
+
+    if(event.data === YT.PlayerState.ENDED){
+
+        putarVideoBerikutnya();
 
     }
 
@@ -360,6 +369,8 @@ tampilkanHasil(data.items || []);
 
 function tampilkanHasil(items){
 
+    daftarVideo = items;
+    
     const resultsDiv =
         document.getElementById("results");
 
@@ -407,8 +418,9 @@ function tampilkanHasil(items){
 
 function loadVideo(videoId){
 
-    currentVideoId =
-        videoId;
+    currentIndex = daftarVideo.findIndex(
+        item => item.id.videoId === videoId
+    );
 
     player.loadVideoById(videoId);
 
@@ -432,6 +444,28 @@ document
     }
 
 });
+
+    
+function putarVideoBerikutnya(){
+
+    if(daftarVideo.length === 0)
+        return;
+
+    currentIndex++;
+
+    if(currentIndex >= daftarVideo.length){
+
+        currentIndex = 0;
+    }
+
+    const nextVideo =
+        daftarVideo[currentIndex];
+
+    player.loadVideoById(
+        nextVideo.id.videoId
+    );
+
+}
 
 /* ======================
    FULLSCREEN
