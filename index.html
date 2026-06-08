@@ -329,12 +329,23 @@ async function searchYoutube(){
         `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=20&q=${encodeURIComponent(keyword)}&key=${API_KEY}`;
 
         const response =
-            await fetch(url);
+    await fetch(url);
 
-        const data =
-            await response.json();
+const data =
+    await response.json();
 
-        tampilkanHasil(data.items);
+console.log("Response API:", data);
+
+if(data.error){
+
+    alert(data.error.message);
+
+    console.log(data.error);
+
+    return;
+}
+
+tampilkanHasil(data.items || []);
 
     }catch(err){
 
