@@ -204,20 +204,7 @@ body{
 
 </div>
 
-<video
-    id="promoPlayer"
-    style="
-        display:none;
-        position:absolute;
-        top:0;
-        left:0;
-        width:100%;
-        height:100%;
-        object-fit:contain;
-        background:black;
-        z-index:9999;
-    "
-></video>
+<audio id="promoPlayer"></audio>
 
 <script src="https://www.youtube.com/iframe_api"></script>
 
@@ -241,32 +228,52 @@ const jadwalPromo = [
 
     {
         waktu:"09:00",
-        video:"Promo CBSS 01.mp4"
+        audio:"Promo CBSS 01.mp3"
     },
 
     {
         waktu:"10:00",
-        video:"Promo CBSS 02.mp4"
+        audio:"Promo CBSS 02.mp3"
     },
 
     {
         waktu:"11:00",
-        video:"Promo CBSS 01.mp4"
+        audio:"Promo CBSS 01.mp3"
     },
 
     {
-        waktu:"18:12",
-        video:"Promo CBSS 02.mp4"
+        waktu:"12:12",
+        audio:"Promo CBSS 02.mp3"
+    },
+
+    {
+        waktu:"13:15",
+        audio:"Promo CBSS 01.mp3"
+    },
+
+    {
+        waktu:"15:30",
+        audio:"Promo CBSS 02.mp3"
+    },
+
+    {
+        waktu:"17:15",
+        audio:"Promo CBSS 01.mp3"
+    },
+
+    {
+        waktu:"18:30",
+        audio:"Promo CBSS 02.mp3"
     },
 
     {
         waktu:"19:15",
-        video:"Promo CBSS 01.mp4"
+        audio:"Promo CBSS 01.mp3"
     },
 
     {
-        waktu:"19:40",
-        video:"Promo CBSS 02.mp4"
+        waktu:"19:50",
+        audio:"Promo CBSS 02.mp3"
     }
 
 ];
@@ -567,18 +574,12 @@ function jalankanPromo(promo){
 
     player.pauseVideo();
 
-    promoPlayer.style.display =
-        "block";
-
     promoPlayer.src =
-        promo.video;
+        promo.audio;
 
     promoPlayer.play();
 
     promoPlayer.onended = ()=>{
-
-        promoPlayer.style.display =
-            "none";
 
         player.playVideo();
 
